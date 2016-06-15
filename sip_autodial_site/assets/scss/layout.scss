@@ -1,0 +1,11 @@
+.content {
+    
+    @media screen and (min-width: 769px) {
+        margin-top: 80px
+    }
+    
+    @media screen and (max-width: 768px) {
+        margin-top: 210px
+    }
+    
+}

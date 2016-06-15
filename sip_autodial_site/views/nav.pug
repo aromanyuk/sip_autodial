@@ -1,0 +1,15 @@
+nav.navbar.navbar-default.navbar-fixed-top
+        .container
+            ul.nav.navbar-nav
+                if user.access === 'admin'
+                    li.menu-users
+                        a(href='/users') Users
+                li.menu-channels
+                    a(href='/channels') Channels
+                //- li.menu-stats
+                //-     a(href='/stats') Statistics
+            ul.nav.navbar-nav.navbar-right
+                li
+                    .navbar-text Hello, #{user.login}
+                li
+                    button.btn.btn-danger.navbar-btn(onclick="location.href='/logout'") Logout

@@ -1,0 +1,5 @@
+node_modules
+bower_components
+sip_autodial_site/public
+npm_debug.log
+socket_worker/bin

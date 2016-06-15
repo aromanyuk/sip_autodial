@@ -1,0 +1,26 @@
+{
+  "name": "assets",
+  "authors": [
+    "<a.m.romanyuk@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "qunit": "^1.23.1"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.4",
+    "jssip": "^1.0.1",
+    "font-awesome": "^4.6.3"
+  }
+}

@@ -1,0 +1,73 @@
+extends layout
+
+block nav
+    include nav
+block content
+    .container
+        .row
+            .col-md-1
+                button.btn.btn-success#btn-add-user(type="button", data-toggle="modal", data-target="#user-modal", data-action="create")
+                    span.glyphicon.glyphicon-plus
+            .col-md-11
+                table#user-table.table.table-striped.table-hover.table-bordered.table-condensed
+                    thead
+                        tr
+                            th User
+                            th Access
+                            th Password
+                            th Channels
+                            th Balance
+                            th Price/ch
+                            th Actions
+                    tbody
+                        each item in data
+                            tr.user-data(data-login=item.login, data-id=item._id.toString())
+                                th=item.login
+                                th=item.access
+                                th=item.password
+                                th=item.channels || 0
+                                th=item.balance || 0
+                                th=item.pricePerChannel || 0
+                                th
+                                    .btn-group.btn-group-sm
+                                        button.btn.btn-primary.btn-user-edit(title='Edit', data-toggle='modal', data-target='#user-modal', data-action="edit")
+                                            span.glyphicon.glyphicon-pencil
+                                        button.btn.btn-danger.btn-user-remove(title='Remove')
+                                            span.glyphicon.glyphicon-remove
+    #user-modal.modal.fade(tabindex="-1", role="dialog")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", ara-label="Close")
+                        span(aria-hidden="true") &times;
+                    h4.modal-title
+                .modal-body
+                    form(role="form")
+                        .form-group.form-group-sm
+                            label.control-label(for='login') Login:*
+                            input#login.form-control(type='text', name='login')
+                        .form-group.form-group-sm
+                            label.control-label(for='password') Password:*
+                            input#password.form-control(type='text', name='password')
+                        .form-group.form-group-sm
+                            label.control-label(for='email') Email:
+                            input#email.form-control(type='text', name='email')
+                        .form-group.form-group-sm
+                            label.control-label(for='numbers') Numbers(separated by comma):
+                            input#numbers.form-control(type='text', name='numbers')
+                        .form-group.form-group-sm
+                            label.control-label(for='price-per-channel') Price per channel:
+                            input#price-per-channel.form-control(type='number', name='price-per-channel')
+                        .form-group.form-group-sm
+                            label.control-label(for='balance') Balance:
+                            input#balance.form-control(type='number', name='balance')
+                        .form-group.form-group-sm
+                            label.control-label(for='access') Access:
+                            select#access.form-control(name='access')
+                                option(value='user') User
+                                option(value='admin') Administrator
+                .modal-footer
+                    button.btn.btn-default(type="button", data-dismiss="modal") Close
+                    button#btn-user-save.btn.btn-primary(type="button", data-dismiss="modal") Save                                        
+block append customScripts
+    script(type='text/javascript', src='/js/users.js')

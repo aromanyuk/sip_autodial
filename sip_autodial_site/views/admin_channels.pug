@@ -1,0 +1,94 @@
+extends layout
+
+block nav
+    include nav
+block content
+    .container-fluid(style={position: 'fixed', width: '200px'})
+        .row
+            .col-md-10.col-md-offset-1
+                .btn-group-vertical.btn-group-md(style={width: '100%'})
+                    button.btn.btn-default.btn-select-all
+                        span.glyphicon.glyphicon-check.pull-left
+                        span All
+                    button.btn.btn-warning.btn-select-none
+                        span.glyphicon.glyphicon-unchecked.pull-left
+                        span None
+                    button.btn.btn-primary.btn-select.btn-select-edit.disabled
+                        span.glyphicon.glyphicon-edit.pull-left
+                        span Edit
+                    button.btn.btn-danger.btn-select.btn-select-remove.disabled
+                        span.glyphicon.glyphicon-check.pull-left
+                        span Del
+                
+    .container
+        .row
+            .col-md-11.col-md-offset-1
+                table#channel-table.table.table-striped.table-hover.table-bordered.table-condensed
+                    thead
+                        tr
+                            th
+                            th Name
+                            th Provider
+                            th Login
+                            th Password
+                            th Status
+                            th Owner
+                            th Actions
+                    tbody
+                        each item in data
+                            tr.channel-data(data-id=item._id.toString(), data-sipLogin=item.sipLogin)
+                                th.channel-checkbox.stop-propagation
+                                    input(type="checkbox")
+                                th.channel-name=item.name
+                                th.channel-provider=item.provider
+                                th.channel-siplogin=item.sipLogin
+                                th.channel-sippassword=item.sipPassword
+                                th.channel-status
+                                    span.label.label-warning=item.status || 'registering'
+                                th.channel-owner=item.ownerName
+                                th
+                                    .btn-group.btn-group-sm.stop-propagation
+                                        button.btn.btn-warning.btn-channel-ctrl(title='Pause')
+                                            span.glyphicon.glyphicon-pause
+                                        button.btn.btn-primary.btn-channel-edit(title='Edit', data-toggle='modal', data-target='#channel-modal', data-action="edit")
+                                            span.glyphicon.glyphicon-pencil
+                                        button.btn.btn-danger.btn-channel-remove(title='Remove')
+                                            span.glyphicon.glyphicon-remove
+        .row
+            .col-md-2.col-md-offset-5
+                button.btn.btn-success.center-block#btn-channel-add(type="button", data-toggle="modal", data-target="#channel-modal", data-action="create") Add
+    #channel-modal.modal.fade(tabindex="-1", role="dialog")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", ara-label="Close")
+                        span(aria-hidden="true") &times;
+                    h4.modal-title
+                .modal-body
+                    form(role="form")
+                        .form-group.form-group-sm
+                            label.control-label(for='name') Name:*
+                            input#name.form-control(type='text')
+                        .form-group.form-group-sm
+                            label.control-label(for='owner') Owner:
+                            select#owner.form-control(name='owner')
+                                option(value='') -
+                                each item in owners
+                                    option(value=item._id.toString(), data-login=item.login)=item.login
+                        .form-group.form-group-sm
+                            label.control-label(for='provider') Provider:*
+                            input#provider.form-control(type='text')
+                        .form-group.form-group-sm
+                            label.control-label(for='sip-login') Login:*
+                            input#sip-login.form-control(type='text')
+                        .form-group.form-group-sm
+                            label.control-label(for='sip-password') Password:*
+                            input#sip-password.form-control(type='text')
+                        .form-group.form-group-sm
+                            label.control-label(for='number') Number:
+                            input#number.form-control(type='text')
+                .modal-footer
+                    button.btn.btn-default(type="button", data-dismiss="modal") Close
+                    button#btn-channel-save.btn.btn-primary(type="button", data-dismiss="modal") Save
+block append customScripts
+    script(type='text/javascript', src='/js/admin_channels.js')
